@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from django.conf.urls import handler404, handler500
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=hi+$fr1_n8bho18zg4iwlwic-k&d3kh90h+5%-px2-^&1*k&2'
+SECRET_KEY = config('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,11 +94,11 @@ WSGI_APPLICATION = 'mi_proyecto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'BD_Proyecto',
-        'USER': 'sa',
-        'PASSWORD': '$inteco2207$',
-        'HOST': 'NTB-CND127GZTQ\\SQLEXPRESS',
-        'PORT': '1433',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='1433'),
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
@@ -178,13 +179,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Esta carpeta se usará cu
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Configuración para Jira
-JIRA_EMAIL = 'inteco2207@gmail.com'
-JIRA_API_TOKEN = 'ATATT3xFfGF0_7dg6e9Z52MuOCc4clVtUvuaXJ9xWYDp27sHdKiOTgvOITw65GlujMjfHev-Zsphe3wtObJJvc_u3zMVz-kcbIlRiJ_lOz7GUFlNtWUWY4ghUPIr7rL42G9vpngqHUzxtyl6ixbX9IsUp8rl5rPAOI1i_qLXee_tLj4dbVZ3QyA=667CE1A3'
-
+JIRA_EMAIL = config('JIRA_EMAIL')
+JIRA_API_TOKEN = config('JIRA_API_TOKEN')
 
 
 # Define una clave secreta para itsdangerous
-ITS_DANGEROUS_SECRET_KEY = 'tu_clave_secreta_segura'  # Cambia 'tu_clave_secreta_segura' por una cadena única y segura
+ITS_DANGEROUS_SECRET_KEY = config('ITS_DANGEROUS_SECRET_KEY')  # Cambia 'tu_clave_secreta_segura' por una cadena única y segura
 
 #handler404 = 'mi_proyecto.views.error_404'
 #handler500 = 'mi_proyecto.views.error_500'

@@ -1,0 +1,19 @@
+# Archivos de entorno virtual
+venv/
+.env
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Configuración de base de datos local
+db.sqlite3
+
+# Archivos de migración
+*/migrations/*
+
+# Archivos específicos de tu entorno
+.DS_Store
+*.log
+*.idea/
+.vscode/

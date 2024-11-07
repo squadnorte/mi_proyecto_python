@@ -1,0 +1,10 @@
+<!-- templates/habilitadores_iniciativa/crear_iniciativa.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Nueva Iniciativa</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form_cabecera.as_p }}
+    <button type="submit" class="btn btn-success">Guardar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!-- usuarios/templates/usuarios/gestion_usuarios.html -->
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Gestión de Usuarios</h2>
+    <hr>
+
+    <!-- Formulario de búsqueda -->
+    <form method="get" class="form-inline mb-4">
+        <input type="text" name="q" class="form-control mr-2" placeholder="Buscar por nombre o email" value="{{ query }}">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <a href="{% url 'user:registro_usuario' %}" class="btn btn-success ml-2">Nuevo Usuario</a>
+    </form>
+
+    <!-- Mostrar la lista de usuarios -->
+    <div class="mt-4 mb-4">
+        <h4>Usuarios Registrados</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de usuario</th>
+                    <th>Correo electrónico</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-warning">¿Estás seguro que deseas desactivar este parámetro?</h2>
+    <p class="lead">{{ parametro.nombre_parametro }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Desactivar</button>
+        <a href="{% url 'config:list' %}" class="btn btn-secondary">Cancelar</a>  <!-- Cambiado 'listar_parametros' a 'app:list' -->
+    </form>
+</div>
+{% endblock %}
+

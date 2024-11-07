@@ -1,0 +1,48 @@
+<!-- templates/habilitadores_iniciativa/listar_iniciativas.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Lista de Iniciativas</h2>
+
+    <!-- Tabla de iniciativas -->
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Jira</th>
+                <th>Squad</th>
+                <th>PO</th>
+                <th>Iniciativa</th>
+                <th>Quarter</th>
+                <th>Analista de Seguridad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in iniciativas %}
+            <tr>
+                <td>{{ item.iniciativa.cod_jira }}</td>
+                <td>{{ item.iniciativa.squad }}</td>
+                <td>{{ item.iniciativa.po }}</td>
+                <td>{{ item.iniciativa.iniciativa }}</td>
+                <td>{{ item.iniciativa.quarter }}</td>
+                <td>{{ item.iniciativa.analista_seguridad }}</td>
+                <td>
+                    <!-- Usando ID cifrado para la URL de edición -->
+                    <a href="{% url 'habin:edit' item.id_cifrado %}" class="btn btn-info btn-sm">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botones para generar reportes -->
+    <div class="my-3">
+        <a href="{% url 'habin:generar_reporte_iniciativas' %}" class="btn btn-secondary">Generar Reporte PDF</a>
+        <a href="{% url 'habin:exportar_reporte_excel' %}" class="btn btn-success">Exportar a Excel</a>
+        <a href="{% url 'habin:new' %}" class="btn btn-primary">Nueva Iniciativa</a>
+    </div>
+</div>
+{% endblock %}
+
+

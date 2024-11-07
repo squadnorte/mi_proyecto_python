@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Error - Página No Disponible{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="error-page">
+        <h1 class="display-4 text-danger">¡Ups! Algo salió mal.</h1>
+        <p class="lead">Estimado usuario, la página que intenta acceder no está disponible.</p>
+        <p class="mb-4">Por favor, póngase en contacto con el administrador si el problema persiste.</p>
+        
+    </div>
+</div>
+
+<style>
+    .error-page {
+        padding: 50px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        font-weight: bold;
+    }
+    p.lead {
+        font-size: 1.25rem;
+        color: #6c757d;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}
+

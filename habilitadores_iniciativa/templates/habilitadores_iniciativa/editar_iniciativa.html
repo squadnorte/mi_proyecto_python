@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Información de la iniciativa -->
+    <h4>Detalle Información de Iniciativa</h4>
+    <div class="form-row">
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="id_cod_jira" style="font-size: 0.8em; font-weight: bold;">Código Jira</label>
+                <input type="text" class="form-control form-control-sm" id="id_cod_jira" name="cod_jira" value="{{ cabecera_form.cod_jira.value }}">
+                {% if cabecera_form.cod_jira.errors %}
+                    <div class="text-danger">{{ cabecera_form.cod_jira.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="id_squad" style="font-size: 0.8em; font-weight: bold;">Squad</label>
+                <input type="text" class="form-control form-control-sm" id="id_squad" name="squad" value="{{ cabecera_form.squad.value }}">
+                {% if cabecera_form.squad.errors %}
+                    <div class="text-danger">{{ cabecera_form.squad.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="id_po" style="font-size: 0.8em; font-weight: bold;">Product Owner</label>
+                <input type="text" class="form-control form-control-sm" id="id_po" name="po" value="{{ cabecera_form.po.value }}">
+                {% if cabecera_form.po.errors %}
+                    <div class="text-danger">{{ cabecera_form.po.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="quarter" style="font-size: 0.8em; font-weight: bold;">Quarter</label>
+                <input type="text" class="form-control form-control-sm" id="quarter" name="quarter" value="{{ cabecera_form.quarter.value }}">
+                {% if cabecera_form.quarter.errors %}
+                    <div class="text-danger">{{ cabecera_form.quarter.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>    
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="id_analista_seguridad" style="font-size: 0.8em; font-weight: bold;">Analista de Seguridad</label>
+                <input type="text" class="form-control form-control-sm" id="id_analista_seguridad" name="analista_seguridad" value="{{ cabecera_form.analista_seguridad.value }}">
+                {% if cabecera_form.analista_seguridad.errors %}
+                    <div class="text-danger">{{ cabecera_form.analista_seguridad.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="id_iniciativa" style="font-size: 0.8em; font-weight: bold;">Iniciativa</label>
+                <input type="text" class="form-control form-control-sm" id="id_iniciativa" name="iniciativa" value="{{ cabecera_form.iniciativa.value }}">
+                {% if cabecera_form.iniciativa.errors %}
+                    <div class="text-danger">{{ cabecera_form.iniciativa.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Habilitadores Asignados -->
+    <h4>Habilitadores Asignados</h4>
+    <div class="form-row">
+        <div class="col-md-7">
+            <input type="text" id="q_assigned" name="q_assigned" placeholder="Buscar habilitadores asignados" value="{{ query_assigned }}" class="form-control form-control-sm">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-sm" name="searching">Buscar</button>
+        </div>
+
+        <div class="col-md-3 text-right">
+            <span style="color: green; font-weight: bold; font-size: 0.8em;">Cumple: {{ cumple_count }}</span>
+            <span style="color: red; font-weight: bold; margin-left: 10px; font-size: 0.8em;">No cumple: {{ no_cumple_count }}</span>
+        </div>
+    </div>
+
+    {{ detalle_formset.management_form }}
+    <table class="table table-bordered table-sm mt-3">
+        <thead>
+            <tr>
+                <th style="font-size: 0.9em;">Id</th>
+                <th style="font-size: 0.8em;">Habilitador</th>
+                <th style="font-size: 0.8em; width: 10%;">Cumplimiento</th>
+                <th style="font-size: 0.8em; width: 10%;">Excepción</th>
+                <th style="font-size: 0.8em; width: 10%;">Observación</th>
+                <th style="font-size: 0.8em; width: 10%;">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in detalle_formset %}
+            <tr>
+                <td style="font-size: 0.8em;">{{ form.instance.habilitador.codigo }}</td>
+                <td style="font-size: 0.8em;">
+                    {{ form.instance.habilitador.titulo }}
+                    {{ form.habilitador.as_hidden }}
+                    {{ form.codigo.as_hidden }}
+                </td>
+                <td style="font-size: 0.8em;">
+                    {{ form.estado_cumplimiento }}
+                    {% if form.estado_cumplimiento.errors %}
+                        <div class="text-danger">{{ form.estado_cumplimiento.errors.0 }}</div>
+                    {% endif %}
+                </td>
+                <td style="font-size: 0.8em;">
+                    {{ form.exception }}
+                    {% if form.exception.errors %}
+                        <div class="text-danger">{{ form.exception.errors.0 }}</div>
+                    {% endif %}
+                </td>
+                <td style="font-size: 0.8em;">
+                    {{ form.observacion }}
+                    {% if form.observacion.errors %}
+                        <div class="text-danger">{{ form.observacion.errors.0 }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if cabecera and cabecera.pk and form.instance.habilitador.codigo %}
+                        <div style="display: flex; gap: 5px;">
+                            <form method="post" action="{% url 'habin:crear_tarea_jira' id_cifrado form.instance.habilitador.codigo %}">
+                                {% csrf_token %}
+                                <button type="submit" name="crear_tarea_jira" class="btn btn-info btn-sm">Jira</button>
+                            </form>
+                            <form method="post" action="{% url 'habin:delete' id_cifrado %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="habilitador_id" value="{{ form.instance.pk }}">
+                                <button type="submit" name="desasignar" class="btn btn-danger btn-sm">-</button>
+                            </form>
+                            
+                            
+                            
+                        </div>
+                    {% else %}
+                        <span>No disponible</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if detalle_formset_page.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page_assigned={{ detalle_formset_page.previous_page_number }}">Anterior</a></li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">{{ detalle_formset_page.number }} / {{ detalle_formset_page.paginator.num_pages }}</span></li>
+            {% if detalle_formset_page.has_next %}
+                <li class="page-item"><a class="page-link" href="?page_assigned={{ detalle_formset_page.next_page_number }}">Siguiente</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Botón para actualizar habilitadores existentes -->
+    <button type="submit" name="update_existing" class="btn btn-info btn-sm">Actualizar Habilitadores Existentes</button>
+
+    <!-- Agregar nuevos habilitadores -->
+    <h4>Plantilla General - Habilitadores</h4>
+    <div class="form-row">
+        <div class="col-md-9">
+            <input type="text" name="q_new" placeholder="Buscar nuevos habilitadores" value="{{ query_new }}" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" name="search_new" class="btn btn-primary btn-sm">Buscar</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sm mt-3">
+        <thead>
+            <tr>
+                <th style="font-size: 0.8em;">Id</th>
+                <th style="font-size: 0.9em;">Habilitador</th>
+                <th style="font-size: 0.8em; width: 5%;">Imprescindible</th>
+                <th style="font-size: 0.8em;">Descripción</th>
+                <th style="font-size: 0.8em;">Entregable</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for habilitador in habilitadores_activos %}
+            <tr>
+                <td style="font-size: 0.8em;">
+                    <input type="checkbox" name="habilitadores" value="{{ habilitador.codigo }}" class="form-check-input">
+                    {{ habilitador.codigo }}
+                </td>
+                <td style="font-size: 0.9em;">{{ habilitador.titulo }}</td>
+                <td style="font-size: 0.8em;">{{ habilitador.imprescindible.valor_parametro }}</td>
+                <td style="font-size: 0.8em;">{{ habilitador.descripcion }}</td>
+                <td style="font-size: 0.8em;">{{ habilitador.observacion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if habilitadores_activos.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page_new={{ habilitadores_activos.previous_page_number }}">Anterior</a></li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">{{ habilitadores_activos.number }} / {{ habilitadores_activos.paginator.num_pages }}</span></li>
+            {% if habilitadores_activos.has_next %}
+                <li class="page-item"><a class="page-link" href="?page_new={{ habilitadores_activos.next_page_number }}">Siguiente</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <button type="submit" name="add_new" class="btn btn-primary btn-sm" style="font-size: 0.8em;">Agregar Nuevos Habilitadores</button>
+</form>
+{% endblock %}
+
+
+

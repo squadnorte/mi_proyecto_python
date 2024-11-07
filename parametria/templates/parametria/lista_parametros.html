@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Parámetros{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Lista de Parámetros</h2>
+    <a href="{% url 'config:new' %}" class="btn btn-success mb-3">Crear Parámetro</a>  <!-- Cambiado 'parametria:crear_parametro' a 'app:new' -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Abreviatura</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in parametros_cifrados %}
+            <tr>
+                <td>{{ item.parametro.codigo_parametro }}</td>
+                <td>{{ item.parametro.nombre_parametro }}</td>
+                <td>{{ item.parametro.valor_parametro }}</td>
+                <td>{{ item.parametro.abreviatura_parametro }}</td>
+                <td>{{ item.parametro.estado_auditoria }}</td>
+                <td>
+                    <a href="{% url 'config:edit' item.id_cifrado %}" class="btn btn-primary btn-sm">Editar</a>  <!-- Cambiado 'parametria:editar_parametro' a 'app:edit' -->
+                    <form method="post" action="{% url 'config:delete' item.id_cifrado %}" style="display:inline;">  <!-- Cambiado 'parametria:cambiar_estado_parametro' a 'app:delete' -->
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+
+

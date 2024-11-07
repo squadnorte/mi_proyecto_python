@@ -1,0 +1,7 @@
+<!-- templates/habilitadores_iniciativa/listar_cabeceras.html -->
+<h1>Lista de Cabeceras de Iniciativas</h1>
+<ul>
+  {% for cabecera in cabeceras %}
+    <li>{{ cabecera.iniciativa }} - {{ cabecera.cod_jira }}</li>
+  {% endfor %}
+</ul>

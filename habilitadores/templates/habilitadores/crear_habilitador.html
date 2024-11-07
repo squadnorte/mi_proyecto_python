@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% load habilitadores_filters %}
+
+{% block content %}
+<h2>{% if habilitador %}Editar{% else %}Nuevo{% endif %} Habilitador de Ciberseguridad</h2>
+
+<form method="POST" class="form-horizontal" id="form-habilitador">
+    {% csrf_token %}
+
+    <!-- Mostrar mensajes de error generales -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Agrupación de campos en filas con Bootstrap -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_dimension">Dimensión</label>
+                {{ form.dimension|add_class:"form-control" }}
+                {% if form.dimension.errors %}
+                    <div class="text-danger">{{ form.dimension.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_dominio">Dominio</label>
+                {{ form.dominio|add_class:"form-control" }}
+                {% if form.dominio.errors %}
+                    <div class="text-danger">{{ form.dominio.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_lineamiento">Lineamiento</label>
+                {{ form.lineamiento|add_class:"form-control" }}
+                {% if form.lineamiento.errors %}
+                    <div class="text-danger">{{ form.lineamiento.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_imprescindible">Imprescindible</label>
+                {{ form.imprescindible|add_class:"form-control" }}
+                {% if form.imprescindible.errors %}
+                    <div class="text-danger">{{ form.imprescindible.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Campo Título -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="id_titulo">Título</label>
+                {{ form.titulo|add_class:"form-control" }}
+                {% if form.titulo.errors %}
+                    <div class="text-danger">{{ form.titulo.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Fila para Entregable con el checkbox alineado -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group d-flex align-items-center">
+                <label for="id_entregable" class="mr-3">Entregable</label>
+                <div class="form-check d-flex align-items-center">
+                    {{ form.entregable|add_class:"form-check-input" }}
+                    <label class="form-check-label ml-2" for="id_entregable">Sí</label>
+                </div>
+                {% if form.entregable.errors %}
+                    <div class="text-danger">{{ form.entregable.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Fila para descripción y observación -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_descripcion">Descripción</label>
+                <textarea name="{{ form.descripcion.name }}" rows="3" class="form-control">{{ form.descripcion.value }}</textarea>
+                {% if form.descripcion.errors %}
+                    <div class="text-danger">{{ form.descripcion.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="id_observacion">Observación</label>
+                <textarea name="{{ form.observacion.name }}" rows="3" class="form-control">{{ form.observacion.value }}</textarea>
+                {% if form.observacion.errors %}
+                    <div class="text-danger">{{ form.observacion.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">
+            {% if habilitador %}Actualizar{% else %}Crear{% endif %}
+        </button>
+        <a href="{% url 'hab:list' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

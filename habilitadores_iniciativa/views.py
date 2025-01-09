@@ -226,6 +226,10 @@ def crear_tarea_jira(request, token, habilitador_codigo):
 
     # Obtener el habilitador
     habilitador = get_object_or_404(HabilitadorCiberseguridad, codigo=habilitador_codigo)
+     # Depuración: verifica los atributos del habilitador
+    print(f"Habilitador: {habilitador}")
+    print(f"Título: {habilitador.titulo}")
+    print(f"Descripción: {habilitador.descripcion}")
 
     # Crear la tarea en Jira
     try:

@@ -14,6 +14,7 @@ class HabilitadorCiberseguridad(models.Model):
     estado_auditoria = models.ForeignKey(Parametro, on_delete=models.CASCADE, related_name='estado_auditoria_habilitador', limit_choices_to={'nombre_parametro': 'ESTADO', 'estado_auditoria': 'activo'})
     usuario_auditoria = models.CharField(max_length=50)
     fecha_auditoria = models.DateField(auto_now_add=True)
+    #password: 0I7ES9ey2fCTFmMaktuo
 
     def __str__(self):
         return self.titulo

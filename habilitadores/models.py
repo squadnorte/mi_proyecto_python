@@ -14,7 +14,8 @@ class HabilitadorCiberseguridad(models.Model):
     estado_auditoria = models.ForeignKey(Parametro, on_delete=models.CASCADE, related_name='estado_auditoria_habilitador', limit_choices_to={'nombre_parametro': 'ESTADO', 'estado_auditoria': 'activo'})
     usuario_auditoria = models.CharField(max_length=50)
     fecha_auditoria = models.DateField(auto_now_add=True)
-    password= "0I7ES9ey2fCTFmMaktuoa"
+    JIRA_API_TOKEN = 'ATATT3xFfGF0_7dg6e9Z52MuOCc4clVtUvuaXJ9xWYDp27sHdKiOTgvOITw65GlujMjfHev-Zsphe3wtObJJvc_u3zMVz-kcbIlRiJ_lOz7GUFlNtWUWY4ghUPIr7rL42G9vpngqHUzxtyl6ixbX9IsUp8rl5rPAOI1i_qLXee_tLj4dbVZ3QyA=667CE1A3'
+    
 
     def __str__(self):
         return self.titulo
